@@ -7,24 +7,12 @@ import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Stroke;
-
-import java.awt.image.BufferedImage;
-
-import java.io.File;
 import java.io.IOException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import java.text.SimpleDateFormat;
-
-import java.util.Date;
-
-import javax.imageio.ImageIO;
-
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 /**
  *
