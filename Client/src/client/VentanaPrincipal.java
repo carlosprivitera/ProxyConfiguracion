@@ -25,6 +25,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -393,7 +394,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 VentanaPrincipal vp = new VentanaPrincipal();
-                vp.setDefaultCloseOperation(vp.EXIT_ON_CLOSE);
+                vp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 vp.setLocationRelativeTo(null);
                 vp.setVisible(true);
                 //new VentanaPrincipal().setVisible(true);
