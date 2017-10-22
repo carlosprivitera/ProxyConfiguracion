@@ -158,6 +158,9 @@
                 <Property name="text" type="java.lang.String" value="jLabel1"/>
                 <Property name="toolTipText" type="java.lang.String" value="Proporci&#xf3;n de colores primarios para obtener un color secundario"/>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel1MouseClicked"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="jButton3">
               <Properties>

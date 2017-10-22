@@ -1,16 +1,28 @@
 
 package client;
 
+import java.awt.AWTException;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
+import java.awt.Robot;
 import java.awt.Stroke;
+import java.awt.image.BufferedImage;
+
+import java.awt.image.RenderedImage;
+
+import java.io.File;
 import java.io.IOException;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import javax.imageio.ImageIO;
+
+import javax.imageio.stream.ImageOutputStream;
 
 import javax.swing.ImageIcon;
 
@@ -22,6 +34,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private ImageIcon imagen = new ImageIcon(this.getClass().getResource("rgb.png"));
     private boolean RGBoCMY = false;
     private int R=127, G=127, B=127;
+    private boolean animando=false;
 
     /** Creates new form VentanaPrincipal */
     public VentanaPrincipal() {
@@ -151,6 +164,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jLabel1.setText("jLabel1");
         jLabel1.setToolTipText("Proporción de colores primarios para obtener un color secundario");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         jPanel3.add(jLabel1);
 
         jButton3.setText("Cubo xyz");
@@ -205,14 +223,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jScrollBar1AdjustmentValueChanged(java.awt.event.AdjustmentEvent evt) {//GEN-FIRST:event_jScrollBar1AdjustmentValueChanged
         // TODO add your handling code here:
+        Graphics2D g = (Graphics2D) jPanel1.getGraphics();//this.getGraphics();
         R=jScrollBar1.getValue();    
         if(this.jScrollBar1.isEnabled()==false) { 
+            pintarCuboXYZ(g);
             jPanel1.repaint(); // miRepaint();
-            pintarCuboXYZ();
            // jPanel1.repaint(); // miRepaint();
         }else{
             jPanel1.repaint(); // miRepaint();
-        }
+        }  
     }//GEN-LAST:event_jScrollBar1AdjustmentValueChanged
     private void jScrollBar2AdjustmentValueChanged(java.awt.event.AdjustmentEvent evt) {//GEN-FIRST:event_jScrollBar2AdjustmentValueChanged
         // TODO add your handling code here:
@@ -248,10 +267,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        pintarCuboXYZ();
+        Graphics2D g = (Graphics2D) jPanel1.getGraphics();//this.getGraphics();
+        pintarCuboXYZ(g);
     }//GEN-LAST:event_jButton3ActionPerformed
-    private void pintarCuboXYZ(){
-        Graphics2D g = (Graphics2D)jPanel1.getGraphics(); //this.getGraphics();
+    
+    
+    private void pintarCuboXYZ(Graphics2D g){
+        
+       // Graphics2D g = (Graphics2D)jPanel1.getGraphics(); //this.getGraphics();
         for(short x=0;x<=R;x++){
             for(short y=0;y<=G;y++){
                 punto3Da2D(x,y,B, g);
@@ -305,6 +328,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        
+        animando=true;
+       // this.jScrollBar2.setValue(255); 
+       // this.jScrollBar3.setValue(255);  
+            
+            this.jScrollBar1.setValue(R);  
+              File file = new File("a"+R+"cubo2.png");
+             // file.deleteOnExit();
+              try {
+                  file.createNewFile();
+              } catch (IOException e) {
+              }
+              BufferedImage image=null;
+              try {
+                image =
+                    new Robot().createScreenCapture(new Rectangle(jPanel1.getLocationOnScreen().x,
+                                                                  jPanel1.getLocationOnScreen().y, jPanel1.getWidth(),
+                                                                  jPanel1.getHeight()));
+              } catch (AWTException e) {
+              }
+              try {
+                ImageIO.write(image, "png", file);
+              } catch (IOException e) {
+              } 
+        if(R<255) this.jScrollBar1.setValue(R+1);  
+    
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -313,7 +366,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         
+        */ 
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -335,7 +388,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                                                                                      null, ex);
         }
         //</editor-fold>
-        */
+        
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -368,9 +421,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO Implement this method
         //super.repaint();
     }
-    
+   // Graphics2D g2 =  null;
     public void miPaint(Graphics g) {
         // TODO Implement this method
+        
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.GRAY);
         Stroke sx = g2.getStroke();
@@ -414,6 +468,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         
         pintaCuboBlancoExterior(g2);
         
+        if(animando==true)  {
+            pintarCuboXYZ(g2);
+            animando=false;
+        }    
+        
         if(RGBoCMY==false) {
             this.jLabel1.setText("CMY(" + R + ":" + G + ":" + B + ")" );
         }else{
@@ -432,7 +491,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
       }else{
         g.setColor(new Color(x1,y1,z1,255));    
       }
-      g.fillOval(300+x1-(int)(z1*0.7f), 300-y1+(int)(z1*0.7f), 1, 1);   
+      g.fillOval(300+x1-(int)(z1*0.7f), 300-y1+(int)(z1*0.7f), 2, 2);   
     }
     private void pintaCuboBlancoExterior(Graphics2D g){
         g.setColor(Color.gray);
