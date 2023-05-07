@@ -1,0 +1,6 @@
+http = http://miproxy.com:8080
+https = http://miproxy.com:8080
+ftp = http://miproxy.com:8080
+usuario = 
+clave = 
+noproxy = localhost, 127.0.0.1, localaddress, .localdomain.com, 127.0.0.0/8, ::1
