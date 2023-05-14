@@ -5,6 +5,7 @@
 package aplicacioneslinux.proxyconfiguracion;
 
 import java.awt.Color;
+import java.io.File;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,7 +13,7 @@ import javax.swing.JOptionPane;
  * @author carlos
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
-
+     private String jarFileName = "";
     /**
      * Creates new form VentanaPrincipal
      */
@@ -55,7 +56,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Configurar Proxy en Debian");
+        setTitle("Configurar Proxy:");
         setSize(new java.awt.Dimension(400, 300));
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -337,6 +338,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         llamarConfigurarProxy();
+        try {
+          //jarFileName = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
+          jarFileName = new File(System.getProperty("java.class.path")).getName();
+          this.setTitle(this.getTitle() + " " + jarFileName);
+        }catch(NullPointerException er) {
+            jarFileName = "";
+        }catch(Exception er) {
+            jarFileName = "";
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void jTextArea1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyTyped
