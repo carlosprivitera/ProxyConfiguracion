@@ -6,6 +6,7 @@ package aplicacioneslinux.proxyconfiguracion;
 
 import java.awt.Color;
 import java.io.File;
+import java.io.IOException;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,6 +14,7 @@ import javax.swing.JOptionPane;
  * @author carlos
  */
 public class VentanaPrincipal extends javax.swing.JFrame {
+     private String jarCaminoFileName = "";
      private String jarFileName = "";
     /**
      * Creates new form VentanaPrincipal
@@ -371,15 +373,42 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         llamarConfigurarProxy();
         try {
           //jarFileName = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
-          jarFileName = new File(System.getProperty("java.class.path")).getPath();
-          this.setTitle(this.getTitle() + " " + jarFileName);
+          jarCaminoFileName = new File(System.getProperty("java.class.path")).getPath();
+          jarFileName = new File(System.getProperty("java.class.path")).getName();
+          this.setTitle(this.getTitle() + " " + jarCaminoFileName);
         }catch(NullPointerException er) {
+            jarCaminoFileName = "";
             jarFileName = "";
         }catch(Exception er) {
+            jarCaminoFileName = "";
             jarFileName = "";
         }
+        String usuario = System.getenv("USER");
+        if(tienePermisosDeRoot()==true) {
+          this.jLabel2.setText("El usuario: " + usuario + " es un administrador, puede ver y escribir en los archivos de configuración.");
+        }else {
+          this.jLabel2.setText("El usuario: " + usuario + " no es un administrador, solamente puede ver. Ejecutar: $ sudo java -jar " + this.jarFileName);  
+        }
+        
     }//GEN-LAST:event_formWindowOpened
 
+    
+    public static boolean tienePermisosDeRoot() {
+    try {
+        // Intentamos crear un archivo en un directorio protegido por root
+        File file = new File("/var/run/testConfigurarProxy172389.txt");
+        file.createNewFile();
+        file.delete();
+        return true; // Si no lanzó excepción, se tienen permisos de root
+      } catch (IOException e) {
+        return false; // Si se lanzó excepción, no se tienen permisos de root
+      }catch (SecurityException e) {
+          return false;
+      }catch(Exception e) {
+          return false;
+      }
+    }
+    
     private void jTextArea1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyTyped
         // TODO add your handling code here:
         if(this.jTextArea1.isEditable()==true) {
