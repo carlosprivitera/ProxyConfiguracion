@@ -419,7 +419,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
-        comentarSiNo();
+       if(this.jLabel1.getText().equals("")) {
+          this.jLabel2.setText("No ha cargado un archivo, debe leer un archivo.");
+       }else{
+          comentarSiNo();   
+       } 
         
     }//GEN-LAST:event_jButton5ActionPerformed
 
