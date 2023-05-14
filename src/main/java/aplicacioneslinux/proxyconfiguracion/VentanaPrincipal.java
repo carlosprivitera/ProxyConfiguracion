@@ -294,7 +294,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             a=a+s.agregarProxy("http_proxy=", Configurar.http, "\n", "\n");
             a=a+s.agregarProxy("https_proxy=", Configurar.https, "", "\n");
             a=a+s.agregarProxy("ftp_proxy=", Configurar.ftp, "", "\n");
-            a=a+s.agregarProxy("no_proxy=", Configurar.no_proxy, "\n", "\n\n");
+            a=a+s.agregarProxy("no_proxy=", "\"" + Configurar.no_proxy + "\"", "\n", "\n\n");
                 //s.agregarComentario("\n## Fin configurar proxy /////////////////// \n");
           }
           if(a>0) {
