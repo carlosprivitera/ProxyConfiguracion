@@ -4,6 +4,7 @@
  */
 package aplicacioneslinux.proxyconfiguracion;
 
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -56,6 +57,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Configurar Proxy en Debian");
         setSize(new java.awt.Dimension(400, 300));
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -110,29 +116,50 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         getContentPane().add(jToolBar1, java.awt.BorderLayout.NORTH);
 
+        jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Courier New", 0, 15)); // NOI18N
         jTextArea1.setRows(5);
+        jTextArea1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextArea1KeyTyped(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTextArea1);
 
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
-        jLabel2.setText("jLabel2");
+        jLabel2.setText("Ayuda");
         getContentPane().add(jLabel2, java.awt.BorderLayout.PAGE_END);
 
         jMenu1.setText("Archivos");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_L, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem1.setText("Leer");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
 
         jMenuItem2.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_G, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem2.setText("Guardar");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
         jMenu1.add(jSeparator1);
 
         jMenuItem3.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem3.setText("Salir");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -154,7 +181,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenu2.add(jMenuItem5);
 
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem4.setText("Agregar proxy a...");
+        jMenuItem4.setText("Agregar proxy");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem4ActionPerformed(evt);
@@ -173,6 +200,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private Servicios s = null;
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        leerArchivo();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void leerArchivo() {
         vu.setLocationRelativeTo(this);
         vu.setDefaultCloseOperation(VentanaUsuario.HIDE_ON_CLOSE);
         vu.setVisible(true);
@@ -181,13 +212,14 @@ public class VentanaPrincipal extends javax.swing.JFrame {
           String error = s.mostrarContenidoArchivo(seleccion);
           if(error.equals("")) {
             this.jLabel1.setText(seleccion);
+            this.jTextArea1.setEditable(true);
           }else{
             this.jLabel1.setText("");
-            JOptionPane.showMessageDialog(this, error, "Error de archivo", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, error, "Error de archivo.", JOptionPane.ERROR_MESSAGE);
           }            
         }    
-    }//GEN-LAST:event_jButton1ActionPerformed
-
+    }
+    
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         agregarProxy(evt);
@@ -196,30 +228,47 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         if(this.jLabel1.getText().equals("")) {
           jButton1ActionPerformed(evt);    
         }
-        if(this.jLabel1.getText().equals(Configurar.aptConf)){
-                s.agregarProxy("Acquire::http::proxy", "\nAcquire::http::proxy " + "\"" + Configurar.http + "\"");
-                s.agregarProxy("Acquire::https::proxy", "Acquire::https::proxy " + "\"" + Configurar.https + "\"");
-                s.agregarProxy("Acquire::ftp::proxy", "Acquire::ftp::proxy " + "\"" + Configurar.ftp + "\"");
-                s.agregarProxy("Acquire::http::proxy::no-proxy", "Acquire::http::proxy::no-proxy " + "\"" + "\"");
-        }
-        if(this.jLabel1.getText().equals(Configurar.bashBashrc)){
-                s.agregarProxy("export http_proxy=", "\nexport http_proxy= " + Configurar.http);
-                s.agregarProxy("export https_proxy=", "export https_proxy= " + Configurar.https);
-                s.agregarProxy("export ftp_proxy=", "export ftp_proxy= " + Configurar.ftp);
-                s.agregarProxy("export no_proxy=", "export no_proxy=  " + "\"" + Configurar.no_proxy + "\"");
-        }
-        if(this.jLabel1.getText().equals(Configurar.environment)){
-                s.agregarProxy("http_proxy=", "\nhttp_proxy= " + "\"" + Configurar.http + "\"");
-                s.agregarProxy("https_proxy=", "https_proxy= " + "\"" + Configurar.https + "\"");
-                s.agregarProxy("ftp_proxy=", "ftp_proxy= " + "\"" + Configurar.ftp + "\"");
-                s.agregarProxy("no_proxy=", "no_proxy= " + "\"" + Configurar.no_proxy + "\"");
-        }
-        if(this.jLabel1.getText().equals(Configurar.wgetrc)){
-                s.agregarProxy("http_proxy=", "\nhttp_proxy= " + Configurar.http);
-                s.agregarProxy("https_proxy=", "https_proxy= " + Configurar.https);
-                s.agregarProxy("ftp_proxy=", "ftp_proxy= " + Configurar.ftp);
-                s.agregarProxy("no_proxy=", "no_proxy= " + Configurar.no_proxy);
-        }
+        if(!jLabel1.getText().equals("")) {
+          int a=0;  
+          if(this.jLabel1.getText().equals(Configurar.aptConf)){
+               // s.agregarComentario("\n##Creado por Configurar Proxy. Comentar estas líneas cuando no se usen.");
+            a=a+s.agregarProxy("Acquire::http::proxy ", "\"" + Configurar.http + "\"", "\n", "\n");
+            a=a+s.agregarProxy("Acquire::https::proxy ", "\"" + Configurar.https + "\"", "", "\n");
+            a=a+s.agregarProxy("Acquire::ftp::proxy ", "\"" + Configurar.ftp + "\"", "", "\n");
+            a=a+s.agregarProxy("Acquire::http::proxy::no-proxy ", "\"" + Configurar.no_proxy + "\"", "\n", "\n\n");
+               // s.agregarComentario("\n## Fin configurar proxy /////////////////// \n");
+          }
+          if(this.jLabel1.getText().equals(Configurar.bashBashrc)){
+               // s.agregarComentario("\n##Creado por Configurar Proxy. Comentar estas líneas cuando no se usen.");
+            a=a+s.agregarProxy("export http_proxy=", Configurar.http, "\n", "\n");
+            a=a+s.agregarProxy("export https_proxy=", Configurar.https, "", "\n");
+            a=a+s.agregarProxy("export ftp_proxy=", Configurar.ftp, "", "\n");
+            a=a+s.agregarProxy("export no_proxy=", "\"" + Configurar.no_proxy + "\"", "\n", "\n\n");
+               // s.agregarComentario("\n## Fin configurar proxy /////////////////// \n");
+          }
+          if(this.jLabel1.getText().equals(Configurar.environment)){
+               // s.agregarComentario("\n##Creado por Configurar Proxy. Comentar estas líneas cuando no se usen.");
+            a=a+s.agregarProxy("http_proxy=", "\"" + Configurar.http + "\"", "\n", "\n");
+            a=a+s.agregarProxy("https_proxy=", "\"" + Configurar.https + "\"", "", "\n");
+            a=a+s.agregarProxy("ftp_proxy=", "\"" + Configurar.ftp + "\"", "", "\n");
+            a=a+s.agregarProxy("no_proxy=", "\"" + Configurar.no_proxy + "\"", "\n", "\n\n");
+               // s.agregarComentario("\n## Fin configurar proxy /////////////////// \n");
+          }
+          if(this.jLabel1.getText().equals(Configurar.wgetrc)){
+              //  s.agregarComentario("\n##Creado por Configurar Proxy. Comentar estas líneas cuando no se usen.");
+            a=a+s.agregarProxy("http_proxy=", Configurar.http, "\n", "\n");
+            a=a+s.agregarProxy("https_proxy=", Configurar.https, "", "\n");
+            a=a+s.agregarProxy("ftp_proxy=", Configurar.ftp, "", "\n");
+            a=a+s.agregarProxy("no_proxy=", Configurar.no_proxy, "\n", "\n\n");
+                //s.agregarComentario("\n## Fin configurar proxy /////////////////// \n");
+          }
+          if(a>0) {
+              this.jLabel2.setText("Se agregaron," + a + ", modificaciones al archivo. Debe guardar el archivo.");
+              this.jButton2.setForeground(Color.red);
+          }else {
+              this.jLabel2.setText("No hubieron cambios en el archivo, no se agregó ninguna configuración proxy.");
+          }    
+        }  
     }
     private VentanaPedirProxy vpp = null; //new VentanaPedirProxy(this, true)
     private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
@@ -240,18 +289,63 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        vpp.setDefaultCloseOperation(HIDE_ON_CLOSE);
-        vpp.setLocationRelativeTo(null);
-        vpp.setVisible(true);
+        llamarConfigurarProxy();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void llamarConfigurarProxy() {
+        vpp.setDefaultCloseOperation(HIDE_ON_CLOSE);
+        vpp.setLocationRelativeTo(this);
+        vpp.setVisible(true);
+    }
+    
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
-        s.saveTextAreaToFile(jTextArea1, jLabel1.getText());
+       guardarArchivo();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void guardarArchivo() {
+        if(!jLabel1.getText().equals("")) {
+          String error = s.saveTextAreaToFile(jTextArea1, jLabel1.getText());
+          if(error.equals("")) {
+            this.jLabel2.setText("Archivo guardado y copia de seguridad realizada.");
+            this.jButton2.setForeground(null);
+          }else{
+            JOptionPane.showMessageDialog(this, error, "Error al guardar", JOptionPane.ERROR_MESSAGE);
+            this.jLabel2.setText("Archivo no guardado.");
+          }
+        }else {
+            this.jLabel2.setText("No ha abierto ningún archivo, primero debe leer un archivo.");
+        }  
+    }
     
-    
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        leerArchivo();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        guardarArchivo();
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        llamarConfigurarProxy();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void jTextArea1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextArea1KeyTyped
+        // TODO add your handling code here:
+        if(this.jTextArea1.isEditable()==true) {
+          this.jButton2.setForeground(Color.red);
+          this.jLabel2.setText("Archivo modificado, debe guardar el archivo.");
+        }  
+    }//GEN-LAST:event_jTextArea1KeyTyped
+   
     /**
      * @param args the command line arguments
      */

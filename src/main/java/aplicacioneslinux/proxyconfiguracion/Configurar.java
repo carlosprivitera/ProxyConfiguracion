@@ -10,16 +10,19 @@ package aplicacioneslinux.proxyconfiguracion;
  */
 public class Configurar {
     public static final String datosArchivoProxy = "datosConfiguracionProxy.txt";
-    public static final String environment  = "/etc/environmentzz";
-    public static final String aptConf  = "/etc/apt/apt.confzz";
-    public static final String bashBashrc  = "/etc/bash.bashrczz";
-    public static final String wgetrc  = "/etc/wgetrczz";
+    public static final String environment  = "/etc/environment";
+    public static final String aptConf  = "/etc/apt/apt.conf";
+    public static final String bashBashrc  = "/etc/bash.bashrc";
+    public static final String wgetrc  = "/etc/wgetrc";
     
-    public static String http = "http://miproxy.com:8080";
-    public static String https = "http://miproxy.com:8080";
-    public static String ftp = "http://miproxy.com:8080";
+    public static String http = "http://miProxy.com:8080/";
+    public static String https = "http://miProxy.com:8080/";
+    public static String ftp = "http://miProxy.com:8080/";
+    public static String httpUsuarioClave = "http://usuario:clave@miProxy.com:8080/";
+    public static String httpsUsuarioClave = "http://usuario:clave@miProxy.com:8080/";
+    public static String ftpUsuarioClave = "http://usuario:clave@miProxy.com:8080/";
     public static String no_proxy = "localhost, 127.0.0.1, localaddress, .localdomain.com, 127.0.0.0/8, ::1";
-    public static String usuario = "";
-    public static String clave = "";
+   // public static String usuario = "";
+   // public static String clave = "";
     
 }

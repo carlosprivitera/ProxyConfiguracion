@@ -44,18 +44,19 @@ public class Servicios {
         return error;
     }
     
-    public void agregarProxy(String textToFind, String textToAppend) {
+    public int agregarProxy(String textToFind, String textToAppend, String nuevaLineaAdelante, String nuevalineaAtras) {
       if (textArea.getText().contains(textToFind)) {
         // If text to find is already present in the text area, do nothing
-        return;
+        return 0;
       } else {
         // If text to find is not present in the text area, append the text to append to the end
-        textArea.append(textToAppend + "\n");
+        textArea.append(nuevaLineaAdelante + textToFind + textToAppend + nuevalineaAtras);
+        return 1;
       }
     }
-
-
-  public void saveTextAreaToFile(JTextArea textArea, String filePath) {
+    
+  public String saveTextAreaToFile(JTextArea textArea, String filePath) {
+    String error = "";  
     try {
         File file = new File(filePath);
         if (file.exists()) {
@@ -64,26 +65,27 @@ public class Servicios {
             String backupPath = filePath + ".copia-" + currentDate;
             File backupFile = new File(backupPath);
             if (!file.renameTo(backupFile)) {
-                System.err.println("No se pudo realizar la copia de seguridad del archivo: " + filePath + ". Ejecutar este programa como # administrador o con $ sudo.");
-                return;
+                error = "No se pudo realizar la copia de seguridad del archivo: " + filePath + ". Ejecutar este programa como # administrador o con $ sudo java -jar estePrograma.jar.";
+                return error;
             }
         }
         try {
             FileWriter fw = new FileWriter(filePath);
             BufferedWriter writer = new BufferedWriter(fw);
             writer.write(textArea.getText());
+            writer.close();
+            fw.close();
         } catch (IOException e) {     
-          String error = "Error: 04 " + e.getMessage() + ". Ejecutar este programa como # administrador o con $ sudo.";
-          JOptionPane.showMessageDialog(null, error);
+          error = "Error: 04 " + e.getMessage() + "-Tipo de error=" + e.getClass().getName() + ". Ejecutar este programa como # administrador o con $ sudo java -jar estePrograma.jar.";
         } catch(Exception e) {
-          JOptionPane.showMessageDialog(null, "Error: 03 " + e.getMessage());    
+          error =  "Error: 03-" + e.getMessage() + "-Tipo de error=" + e.getClass().getName();    
         }
+        
     } catch (SecurityException e) {
-        String error = "Error: 02 " + e.getMessage() + ". No tienen los permisos necesarios para escribir en el archivo. Ejecutar este programa como # administrador o con $ sudo.";
-        JOptionPane.showMessageDialog(null, error);
+        error = "Error: 02 " + e.getMessage() + ". No tienen los permisos necesarios para escribir en el archivo. Ejecutar este programa como # administrador o con $ sudo java -jar estePrograma.jar.";
     } catch(Exception e) {
-        JOptionPane.showMessageDialog(null, "Error: 01 " + e.getMessage());
+        error = "Error: 01 " + e.getMessage() + "-Tipo de error=" + e.getClass().getName();
     }
+    return error;
   }
-    
 }

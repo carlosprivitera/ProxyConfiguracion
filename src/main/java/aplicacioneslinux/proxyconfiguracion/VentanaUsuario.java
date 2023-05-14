@@ -193,7 +193,7 @@ public class VentanaUsuario extends javax.swing.JDialog {
         if(this.jRadioButton1.isSelected()) {
             seleccion = this.jRadioButton1.getText();
             if(!archivoExiste(seleccion)) {
-                JOptionPane.showMessageDialog(this, "El archivo no existe, un administrador root debe crearlo en una Terminal. O ejecutar este programa como administrador root o con sudo: $ sudo java -jar miPrograma", seleccion, HEIGHT);
+                JOptionPane.showMessageDialog(this, "El archivo no existe, un administrador # root debe crearlo en una Terminal. O ejecutar este programa como administrador # root o con sudo: $ sudo java -jar miPrograma", seleccion, HEIGHT);
                 return;
             }
         }    
@@ -272,7 +272,7 @@ public class VentanaUsuario extends javax.swing.JDialog {
           } catch (IOException e) {
             //e.printStackTrace();
             JOptionPane.showMessageDialog(this, 
-              "Error: " + e.getMessage() + ". Si es un problema de permisos debe ejecutar este programa como administrador root o con sudo: $ sudo java -jar miPrograma", 
+              "Error: " + e.getMessage() + ". Si es un problema de permisos debe ejecutar este programa como administrador # root o con sudo: $ sudo java -jar miPrograma", 
               seleccion, JOptionPane.ERROR_MESSAGE);
             return false;
           } catch(Exception e) {

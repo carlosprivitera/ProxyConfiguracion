@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 /**
@@ -24,12 +25,13 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
     public VentanaPedirProxy(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.http.setText(Configurar.http);
-        this.https.setText(Configurar.https);
-        this.ftp.setText(Configurar.ftp);
-        this.noproxy.setText(Configurar.no_proxy);
-        this.usuario.setText(Configurar.usuario);
-        this.clave.setText(Configurar.clave);
+       // this.http.setText(Configurar.http);
+       // this.https.setText(Configurar.https);
+       // this.ftp.setText(Configurar.ftp);
+       // this.noproxy.setText(Configurar.no_proxy);
+       // this.usuario.setText(Configurar.usuario);
+       // this.clave.setText(Configurar.clave);
+       this.noproxy.setCaretPosition(0);
     }
 
     /**
@@ -48,10 +50,6 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
         https = new javax.swing.JTextField();
         ftp = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        usuario = new javax.swing.JTextField();
-        clave = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         jSeparator2 = new javax.swing.JSeparator();
@@ -59,12 +57,22 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
         jSeparator3 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Datos del proxy a configurar");
         setModal(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+            public void windowDeactivated(java.awt.event.WindowEvent evt) {
+                formWindowDeactivated(evt);
+            }
             public void windowOpened(java.awt.event.WindowEvent evt) {
                 formWindowOpened(evt);
             }
@@ -76,80 +84,95 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
 
         jLabel3.setText("FTP:");
 
-        http.setText("http://proxy.miservidor.com.ar:8080");
+        http.setText("http://proxy.miServidor.com:8080/");
         http.setName("http"); // NOI18N
 
-        https.setText("http://proxy.miservidor.com.ar:8080");
+        https.setText("http://proxy.miServidor.com:8080/");
         https.setName("https"); // NOI18N
 
-        ftp.setText("http://proxy.miservidor.com.ar:8080");
+        ftp.setText("http://proxy.miServidor.com:8080/");
         ftp.setName("ftp"); // NOI18N
 
-        jButton1.setText("Guardar configuración");
+        jButton1.setText(" Guardar configuración");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
-        jLabel5.setText("Usuario:");
+        jLabel7.setText("Opcional, con usuario y clave");
 
-        jLabel6.setText("Clave:");
-
-        usuario.setName("usuario"); // NOI18N
-
-        clave.setName("clave"); // NOI18N
-
-        jLabel7.setText("* Opcional *");
-
-        noproxy.setText("localhost, 127.0.0.1, 127.0.0.0/8, ::1");
+        noproxy.setText("localhost, 127.0.0.1, localaddress, .localdomain.com, 127.0.0.0/8, ::1");
         noproxy.setName("noproxy"); // NOI18N
 
         jLabel8.setText("No Proxy");
 
-        jLabel4.setText("jLabel4");
+        jLabel4.setText("Ayuda");
+
+        jButton2.setText("Autenticar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Salir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Sin autenticar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setText("Por defecto, sin usuario y clave");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jSeparator1)
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addComponent(jSeparator1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(http)
-                            .addComponent(https)
-                            .addComponent(ftp)
+                            .addComponent(jSeparator3, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(usuario, javax.swing.GroupLayout.DEFAULT_SIZE, 197, Short.MAX_VALUE)
-                                    .addComponent(clave))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 62, Short.MAX_VALUE)
+                                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(http)
+                                    .addComponent(https)
+                                    .addComponent(ftp)
+                                    .addComponent(noproxy, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)))
+                            .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(noproxy)))
-                    .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 301, Short.MAX_VALUE)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -173,29 +196,29 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(noproxy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(usuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(clave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton2)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton4)
+                    .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -216,12 +239,13 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
               escritor.write(nombre + " = " + valor + "\n");
           }
         }
-        escritor.close();  
+        escritor.close();
+        cargarConfiguracionEnConfigurar();
         this.jLabel4.setText("Configuración guardada.");
       }catch(IOException er) {
-          
+          this.jLabel4.setText("Error: 04 " + er.getMessage());
       }catch(Exception er) {
-          
+          this.jLabel4.setText("Error: 03 " + er.getMessage());
       }  
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -239,16 +263,16 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
             for (Component c : componentes) {
               if (c instanceof JTextField && c.getName().equals(partes[0].strip())) {
                ((JTextField) c).setText(partes[1].strip());
+               ((JTextField) c).setCaretPosition(0);
                 break;
               }
             }
           }
-          Configurar.http = http.getText();
-          Configurar.https = https.getText();
-          Configurar.ftp = ftp.getText();
-          Configurar.no_proxy = noproxy.getText();
-          Configurar.usuario = usuario.getText();
-          Configurar.clave = clave.getText();
+          
+          cargarConfiguracionEnConfigurar();
+          
+        //  Configurar.usuario = usuario.getText();
+        //  Configurar.clave = clave.getText();
           br.close();
           fr.close();
           this.jLabel4.setText("Configuración actual para el proxy.");
@@ -256,11 +280,47 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
             this.jLabel4.setText("No existe un archivo de configuración.");
         }
       }catch(IOException er) {
-          
+          this.jLabel4.setText("Error: 02 " + er.getMessage());
       }catch(Exception er) {
-          
+          this.jLabel4.setText("Error: 01 " + er.getMessage());
       }          
     }//GEN-LAST:event_formWindowOpened
+
+    private void cargarConfiguracionEnConfigurar() {
+        Configurar.http = http.getText();
+        Configurar.https = https.getText();
+        Configurar.ftp = ftp.getText();
+        Configurar.no_proxy = noproxy.getText();
+    } 
+    
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+      // TODO add your handling code here:
+        this.http.setText(Configurar.httpUsuarioClave);
+        this.https.setText(Configurar.httpsUsuarioClave);
+        this.ftp.setText(Configurar.ftpUsuarioClave);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+       // JOptionPane.showMessageDialog(this, "Cerrando");
+    }//GEN-LAST:event_formWindowClosing
+
+    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
+        // TODO add your handling code here:
+       // JOptionPane.showMessageDialog(this, "Ocultando");
+    }//GEN-LAST:event_formWindowDeactivated
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+        this.http.setText(Configurar.http);
+        this.https.setText(Configurar.https);
+        this.ftp.setText(Configurar.ftp);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -305,23 +365,23 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField clave;
     private javax.swing.JTextField ftp;
     private javax.swing.JTextField http;
     private javax.swing.JTextField https;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextField noproxy;
-    private javax.swing.JTextField usuario;
     // End of variables declaration//GEN-END:variables
 }
