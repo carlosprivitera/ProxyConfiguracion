@@ -126,18 +126,30 @@ public class Servicios {
     try {
       String text = textArea.getText();
       String[] lines = text.split("\\r?\\n");
-
+      String word = "";
       boolean changed = false;
 
       for (int i = 0; i < lines.length; i++) {
         String line = lines[i];
-        boolean found = false;
-        for (String word : wordsToFind) {
-            if (line.contains(word)) {
-                found = true;
-                break;
+        //boolean found = false;
+        //for (String word : wordsToFind) {
+          for (int ii = 0; ii < wordsToFind.length; ii++) {
+            word = wordsToFind[ii];  
+            if (line.toLowerCase().contains(word.toLowerCase())) {
+               if (line.startsWith("#")) {
+                  lines[i] = line.substring(1);
+                  changed = true;
+                  linesCommented++;
+               } else {
+                  lines[i] = "#" + line;
+                  changed = true;
+                  linesCommented++;
+               } 
+               //found = true;
+               break;
             }
         }
+        /**
         if (found) {
             if (line.startsWith("#")) {
                 lines[i] = line.substring(1);
@@ -149,6 +161,7 @@ public class Servicios {
                 linesCommented++;
             }
         }
+        **/
       }
 
       if (changed) {

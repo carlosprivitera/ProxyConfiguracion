@@ -13,7 +13,12 @@ public class Configurar {
     public static final String cadenasProxy[] = {   
       "Acquire::http::proxy", "Acquire::https::proxy", "Acquire::ftp::proxy", "Acquire::http::proxy::no-proxy", 
       "export http_proxy=", "export https_proxy=", "export ftp_proxy=", "export no_proxy=",
-      "http_proxy=", "https_proxy=", "ftp_proxy=", "no_proxy=" 
+      "http_proxy=", "https_proxy=", "ftp_proxy=", "no_proxy=",
+      
+      "ACQUIRE::HTTP::PROXY", "ACQUIRE::HTTPS::PROXY", "ACQUIRE::FTP::PROXY", "ACQUIRE::HTTP::PROXY::NO-PROXY", 
+      "EXPORT HTTP_PROXY=", "EXPORT HTTPS_PROXY=", "EXPORT FTP_PROXY=", "EXPORT NO_PROXY=",
+      "HTTP_PROXY=", "HTTPS_PROXY=", "FTP_PROXY=", "NO_PROXY="
+      
     };
     
     
