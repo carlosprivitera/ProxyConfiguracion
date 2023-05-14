@@ -63,7 +63,7 @@ public class VentanaPedirProxy extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle("Datos del proxy a configurar");
+        setTitle("Datos del Proxy a configurar");
         setModal(true);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {

@@ -38,7 +38,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JToolBar.Separator();
         jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jSeparator2 = new javax.swing.JToolBar.Separator();
         jLabel1 = new javax.swing.JLabel();
@@ -53,6 +55,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -89,6 +92,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jToolBar1.add(jButton2);
 
+        jSeparator3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jSeparator3.setMaximumSize(new java.awt.Dimension(20, 32767));
+        jSeparator3.setMinimumSize(new java.awt.Dimension(20, 0));
+        jSeparator3.setPreferredSize(new java.awt.Dimension(20, 0));
+        jToolBar1.add(jSeparator3);
+
         jButton4.setText("Configurar Proxy");
         jButton4.setFocusable(false);
         jButton4.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
@@ -99,6 +108,17 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(jButton4);
+
+        jButton5.setText("Comentar Si/No");
+        jButton5.setFocusable(false);
+        jButton5.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton5.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton5);
 
         jButton3.setText("Agregar Proxy a  ==>");
         jButton3.setFocusable(false);
@@ -181,6 +201,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         });
         jMenu2.add(jMenuItem5);
 
+        jMenuItem6.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem6.setText("Comentar Si/No");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem6ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem6);
+
         jMenuItem4.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_DOWN_MASK));
         jMenuItem4.setText("Agregar proxy");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -213,10 +242,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
           String error = s.mostrarContenidoArchivo(seleccion);
           if(error.equals("")) {
             this.jLabel1.setText(seleccion);
+            this.jLabel2.setText("Archivo cargado correctamente.");
             this.jTextArea1.setEditable(true);
             this.jButton2.setForeground(null);
           }else{
             this.jLabel1.setText("");
+            this.jLabel2.setText(error);
             JOptionPane.showMessageDialog(this, error, "Error de archivo.", JOptionPane.ERROR_MESSAGE);
           }            
         }    
@@ -340,7 +371,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         llamarConfigurarProxy();
         try {
           //jarFileName = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
-          jarFileName = new File(System.getProperty("java.class.path")).getName();
+          jarFileName = new File(System.getProperty("java.class.path")).getPath();
           this.setTitle(this.getTitle() + " " + jarFileName);
         }catch(NullPointerException er) {
             jarFileName = "";
@@ -356,7 +387,29 @@ public class VentanaPrincipal extends javax.swing.JFrame {
           this.jLabel2.setText("Archivo modificado, debe guardar el archivo.");
         }  
     }//GEN-LAST:event_jTextArea1KeyTyped
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        comentarSiNo();
+        
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        // TODO add your handling code here:
+        comentarSiNo();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
    
+    private void comentarSiNo() {
+        int a = 0;
+        a=s.buscarComentarSiNoConfiguracionProxy(Configurar.cadenasProxy);
+        if(a>0) {
+          this.jLabel2.setText("Se agregaron y/o se quitaron," + a + " #, comentario al archivo. Debe guardar el archivo.");
+          this.jButton2.setForeground(Color.red);
+        }else {
+          this.jLabel2.setText("No se agregaron ni quitaron comentarios, #, al archivo.");  
+        }
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -397,6 +450,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -407,9 +461,11 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
+    private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables

@@ -9,6 +9,14 @@ package aplicacioneslinux.proxyconfiguracion;
  * @author carlos
  */
 public class Configurar {
+    
+    public static final String cadenasProxy[] = {   
+      "Acquire::http::proxy", "Acquire::https::proxy", "Acquire::ftp::proxy", "Acquire::http::proxy::no-proxy", 
+      "export http_proxy=", "export https_proxy=", "export ftp_proxy=", "export no_proxy=",
+      "http_proxy=", "https_proxy=", "ftp_proxy=", "no_proxy=" 
+    };
+    
+    
     public static final String datosArchivoProxy = "datosConfiguracionProxy.txt";
     public static final String environment  = "/etc/environment";
     public static final String aptConf  = "/etc/apt/apt.conf";

@@ -88,4 +88,83 @@ public class Servicios {
     }
     return error;
   }
+  
+/**
+  public int buscarComentarSiNoConfiguracionProxy(String searchText) {
+    int linesCommented = 0;
+    try {
+        String text = textArea.getText();
+        String[] lines = text.split("\\r?\\n");
+        for (int i = 0; i < lines.length; i++) {
+            if (lines[i].contains(searchText)) {
+                int commentIndex = lines[i].indexOf('#');
+                if (commentIndex == -1) { // No hay #, se agrega
+                    lines[i] = "#" + lines[i];
+                    linesCommented++;
+                } else { // Ya hay #, se quita
+                    lines[i] = lines[i].substring(commentIndex + 1);
+                    linesCommented++;
+                }
+            }
+        }
+        text = String.join("\n", lines);
+        textArea.setText(text);
+    } catch (Exception e) {
+        //e.printStackTrace();
+        JOptionPane.showMessageDialog(null, e.getMessage() + "-" + e.getClass().getName(), 
+                "Error procesando comentarios #", JOptionPane.ERROR_MESSAGE);
+        return 0;
+    }
+    return linesCommented;
+  }  
+  
+**/
+  
+  public int buscarComentarSiNoConfiguracionProxy(String[] wordsToFind) {
+    
+    int linesCommented = 0;
+    try {
+      String text = textArea.getText();
+      String[] lines = text.split("\\r?\\n");
+
+      boolean changed = false;
+
+      for (int i = 0; i < lines.length; i++) {
+        String line = lines[i];
+        boolean found = false;
+        for (String word : wordsToFind) {
+            if (line.contains(word)) {
+                found = true;
+                break;
+            }
+        }
+        if (found) {
+            if (line.startsWith("#")) {
+                lines[i] = line.substring(1);
+                changed = true;
+                linesCommented++;
+            } else {
+                lines[i] = "#" + line;
+                changed = true;
+                linesCommented++;
+            }
+        }
+      }
+
+      if (changed) {
+        text = String.join("\n", lines);
+        text += "\n";
+        textArea.setText(text);
+        return linesCommented;
+      } else {
+        return 0;
+      }
+    } catch (Exception e) {
+        //e.printStackTrace();
+        JOptionPane.showMessageDialog(null, e.getMessage() + "-" + e.getClass().getName(), 
+                "Error procesando comentarios #", JOptionPane.ERROR_MESSAGE);
+        return 0;
+    }
+  }
+  
 }
