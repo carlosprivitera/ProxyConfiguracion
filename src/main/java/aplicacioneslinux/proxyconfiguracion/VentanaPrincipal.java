@@ -118,7 +118,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
-        jTextArea1.setFont(new java.awt.Font("Courier New", 0, 15)); // NOI18N
+        jTextArea1.setFont(new java.awt.Font("Liberation Mono", 0, 14)); // NOI18N
         jTextArea1.setRows(5);
         jTextArea1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -213,6 +213,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
           if(error.equals("")) {
             this.jLabel1.setText(seleccion);
             this.jTextArea1.setEditable(true);
+            this.jButton2.setForeground(null);
           }else{
             this.jLabel1.setText("");
             JOptionPane.showMessageDialog(this, error, "Error de archivo.", JOptionPane.ERROR_MESSAGE);

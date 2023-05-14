@@ -1,4 +1,0 @@
-http = http://miproxy.com:8080f
-https = http://miproxy.com:8080ff
-ftp = http://miproxy.com:8080fff
-noproxy = localhost, 127.0.0.1, localaddress, .localdomain.com, 127.0.0.0/8, ::1
