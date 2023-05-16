@@ -275,9 +275,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
           }
           if(this.jLabel1.getText().equals(Configurar.bashBashrc)){
                // s.agregarComentario("\n##Creado por Configurar Proxy. Comentar estas líneas cuando no se usen.");
-            a=a+s.agregarProxy("export http_proxy=", Configurar.http, "\n", "\n");
-            a=a+s.agregarProxy("export https_proxy=", Configurar.https, "", "\n");
-            a=a+s.agregarProxy("export ftp_proxy=", Configurar.ftp, "", "\n");
+            a=a+s.agregarProxy("export http_proxy=", "\"" + Configurar.http + "\"", "\n", "\n");
+            a=a+s.agregarProxy("export https_proxy=", "\"" + Configurar.https + "\"", "", "\n");
+            a=a+s.agregarProxy("export ftp_proxy=", "\"" + Configurar.ftp + "\"", "", "\n");
             a=a+s.agregarProxy("export no_proxy=", "\"" + Configurar.no_proxy + "\"", "\n", "\n\n");
                // s.agregarComentario("\n## Fin configurar proxy /////////////////// \n");
           }
