@@ -53,13 +53,20 @@ public class VentanaUsuario extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Seleccionar un archivo");
         setModal(true);
         setResizable(false);
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 formMouseEntered(evt);
+            }
+        });
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+            public void windowDeactivated(java.awt.event.WindowEvent evt) {
+                formWindowDeactivated(evt);
             }
         });
 
@@ -191,12 +198,9 @@ public class VentanaUsuario extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        seleccion = "";
         if(this.jRadioButton1.isSelected()) {
             seleccion = this.jRadioButton1.getText();
-            if(!archivoExiste(seleccion)) {
-                JOptionPane.showMessageDialog(this, "El archivo no existe, un administrador # root debe crearlo en una Terminal. O ejecutar este programa como administrador # root o con sudo: $ sudo java -jar miPrograma", seleccion, HEIGHT);
-                return;
-            }
         }    
         if(this.jRadioButton2.isSelected()) {
             seleccion = this.jRadioButton2.getText();
@@ -207,7 +211,12 @@ public class VentanaUsuario extends javax.swing.JDialog {
         if(this.jRadioButton4.isSelected()) {
             seleccion = this.jRadioButton4.getText();
         }
-        this.dispose();
+        if(!archivoExiste(seleccion)) {
+                //JOptionPane.showMessageDialog(this, "El archivo no existe, un administrador # root debe crearlo en una Terminal. O ejecutar este programa como administrador # root o con sudo: $ sudo java -jar miPrograma", seleccion, HEIGHT);
+                return;
+        }else{
+           this.dispose(); 
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -215,6 +224,18 @@ public class VentanaUsuario extends javax.swing.JDialog {
         seleccion = "";
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowDeactivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowDeactivated
+        // TODO add your handling code here:
+        //if(seleccion.equals("")) {
+        //    this.dispose();
+        //}
+    }//GEN-LAST:event_formWindowDeactivated
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        seleccion = "";
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

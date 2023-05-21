@@ -7,6 +7,8 @@ package aplicacioneslinux.proxyconfiguracion;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
+import java.util.TreeMap;
 import javax.swing.JOptionPane;
 
 /**
@@ -59,6 +61,8 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem4 = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jMenuItem7 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Configurar Proxy:");
@@ -220,6 +224,16 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenu2.add(jMenuItem4);
+        jMenu2.add(jSeparator4);
+
+        jMenuItem7.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_V, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        jMenuItem7.setText("Ver las variables de entorno");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu2.add(jMenuItem7);
 
         jMenuBar1.add(jMenu2);
 
@@ -237,7 +251,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
     private void leerArchivo() {
         vu.setLocationRelativeTo(this);
-        vu.setDefaultCloseOperation(VentanaUsuario.HIDE_ON_CLOSE);
+        //vu.setDefaultCloseOperation(VentanaUsuario.HIDE_ON_CLOSE);
         vu.setVisible(true);
         String seleccion = vu.getSeleccion();
         if(!seleccion.equals("")) {
@@ -246,6 +260,7 @@ public class VentanaPrincipal extends javax.swing.JFrame {
             this.jLabel1.setText(seleccion);
             this.jLabel2.setText("Archivo cargado correctamente.");
             this.jTextArea1.setEditable(true);
+            this.jTextArea1.setEnabled(true);
             this.jButton2.setForeground(null);
           }else{
             this.jLabel1.setText("");
@@ -431,6 +446,23 @@ public class VentanaPrincipal extends javax.swing.JFrame {
         // TODO add your handling code here:
         comentarSiNo();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        Map<String, String> envVars = new TreeMap<>(System.getenv());
+        String s = "";
+        for (Map.Entry<String, String> entry : envVars.entrySet()) {
+            String varName = entry.getKey();
+            String varValue = entry.getValue();
+            //System.out.println(varName + " = " + varValue);
+            s = s + varName + " = " + varValue + "\n";
+        }
+        this.jTextArea1.setEditable(false);
+        this.jLabel2.setText("Variables de entorno.");
+        this.jLabel1.setText("");
+        this.jButton2.setForeground(null);
+        this.jTextArea1.setText(s);
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
    
     private void comentarSiNo() {
         int a = 0;
@@ -495,10 +527,12 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToolBar jToolBar1;
     // End of variables declaration//GEN-END:variables
