@@ -282,10 +282,10 @@ public class VentanaPrincipal extends javax.swing.JFrame {
           int a=0;  
           if(this.jLabel1.getText().equals(Configurar.aptConf)){
                // s.agregarComentario("\n##Creado por Configurar Proxy. Comentar estas líneas cuando no se usen.");
-            a=a+s.agregarProxy("Acquire::http::proxy ", "\"" + Configurar.http + "\"", "\n", "\n");
-            a=a+s.agregarProxy("Acquire::https::proxy ", "\"" + Configurar.https + "\"", "", "\n");
-            a=a+s.agregarProxy("Acquire::ftp::proxy ", "\"" + Configurar.ftp + "\"", "", "\n");
-            a=a+s.agregarProxy("Acquire::http::proxy::no-proxy ", "\"" + Configurar.no_proxy + "\"", "\n", "\n\n");
+            a=a+s.agregarProxy("Acquire::http::proxy ", "\"" + Configurar.http + "\";", "\n", "\n");
+            a=a+s.agregarProxy("Acquire::https::proxy ", "\"" + Configurar.https + "\";", "", "\n");
+            a=a+s.agregarProxy("Acquire::ftp::proxy ", "\"" + Configurar.ftp + "\";", "", "\n");
+            a=a+s.agregarProxy("Acquire::http::proxy::no-proxy ", "\"" + Configurar.no_proxy + "\";", "\n", "\n\n");
                // s.agregarComentario("\n## Fin configurar proxy /////////////////// \n");
           }
           if(this.jLabel1.getText().equals(Configurar.bashBashrc)){
